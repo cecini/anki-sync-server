@@ -113,16 +113,26 @@ class SyncCollectionHandler(Syncer):
     # server-side deletions to be returned by start
     def start(self, minUsn, lnewer, graves={"cards": [], "notes": [], "decks": []}, offset=None):
         if offset is not None:
-            raise NotImplementedError('You are using the experimental V2 scheduler, which is not supported by the server.')
+            pass
+
         self.maxUsn = self.col._usn
         self.minUsn = minUsn
         self.lnewer = not lnewer
+        print("start calling removed to get lgraves in server, and change graves usn =new")
         lgraves = self.removed()
+        print("lgraves: \n")
+        print(lgraves)
+        print("start calling remove to delete graves in server, no anki client not impl")
+        print(graves)
         self.remove(graves)
         return lgraves
 
     def applyGraves(self, chunk):
+        print("applyGraves update graves usn and calling remove to delete graves from client")
         self.remove(chunk)
+        self.col.db.execute("update graves set usn=? where usn=-1",
+                             self.maxUsn)
+        #self.removed()
 
     def applyChanges(self, changes):
         self.rchg = changes
@@ -132,10 +142,14 @@ class SyncCollectionHandler(Syncer):
         return lchg
 
     def sanityCheck2(self, client, full=None):
+        #import pdb;pdb.set_trace()
+        print("calling sanityCheck2")
         server = self.sanityCheck(full)
         if client != server:
+            logger.info("schedcounts, countcards, countnotes, countrevlog, countgraves, lenmodels, lendecks, lendecksallConf")
+
             logger.info(
-                f"sanity check failed with server: {server} client: {client}"
+                f"sanity check2 failed with server: {server} client: {client}"
             )
 
             return dict(status="bad", c=client, s=server)
@@ -148,6 +162,7 @@ class SyncCollectionHandler(Syncer):
     # doesn't use self.usnLim() (which we override in this class) in queries.
     # "usn=-1" has been replaced with "usn >= ?", self.minUsn by hand.
     def removed(self):
+        print("calling removed")
         cards = []
         notes = []
         decks = []

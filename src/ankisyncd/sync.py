@@ -92,12 +92,14 @@ class Syncer(object):
                 return "model had usn = -1"
         if found:
             self.col.models.save()
+        # import pdb;pdb.set_trace()
         self.col.sched.reset()
         # check for missing parent decks
         #self.col.sched.deckDueList()
         # return summary of deck
         return [
             list(self.col.sched.counts()),
+            #list((0,0,0)),
             self.col.db.scalar("select count() from cards"),
             self.col.db.scalar("select count() from notes"),
             self.col.db.scalar("select count() from revlog"),
@@ -164,6 +166,8 @@ from notes where %s""" % lim, self.maxUsn)
     ##########################################################################
 
     def removed(self):
+
+        print("self calling removed")
         cards = []
         notes = []
         decks = []
@@ -185,16 +189,23 @@ from notes where %s""" % lim, self.maxUsn)
         return dict(cards=cards, notes=notes, decks=decks)
 
     def remove(self, graves):
+        print("self calling server remove,server= true, wheher from serverself or client graves: ")
+        print(graves)
+        #import pdb; pdb.set_trace()
+
         # pretend to be the server so we don't set usn = -1
         self.col.server = True
 
         # notes first, so we don't end up with duplicate graves
         self.col._remNotes(graves['notes'])
+        # remo: add grave and delete
         # then cards
         self.col.remCards(graves['cards'], notes=False)
+        # maybe have rm below,need comment 
         # and decks
         for oid in graves['decks']:
-            self.col.decks.rem(oid, childrenToo=False)
+            #self.col.decks.rem(oid, cardsToo=False, childrenToo=False)
+            self.col.decks.rem(oid)
 
         self.col.server = False
 
