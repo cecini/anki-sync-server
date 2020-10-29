@@ -131,9 +131,6 @@ class SyncCollectionHandler(Syncer):
     def applyGraves(self, chunk):
         print("applyGraves update graves usn and calling remove to delete graves from client")
         self.remove(chunk)
-        self.col.db.execute("update graves set usn=? where usn=-1",
-                             self.maxUsn)
-        #self.removed()
 
     def applyChanges(self, changes):
         self.rchg = changes
