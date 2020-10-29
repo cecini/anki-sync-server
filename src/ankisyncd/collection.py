@@ -40,6 +40,8 @@ class CollectionWrapper:
         """
 
         # Open the collection and execute the function
+        #import pdb; pdb.set_trace()
+        # reuse??
         self.open()
         args = [self.__col] + args
         ret = func(*args, **kw)
@@ -64,7 +66,7 @@ class CollectionWrapper:
         return col
 
     def _get_collection(self):
-        col = anki.storage.Collection(self.path)
+        col = anki.storage.Collection(self.path, server=True, log=True)
 
         # Ugly hack, replace default media manager with our custom one
         col.media.close()
@@ -134,4 +136,5 @@ def get_collection_wrapper(config, path, setup_new_collection = None):
                             inherit from CollectionWrapper''')
         return class_(config, path, setup_new_collection)
     else:
+        logger.info("using CollectionWrapper to init")
         return CollectionWrapper(config, path, setup_new_collection)

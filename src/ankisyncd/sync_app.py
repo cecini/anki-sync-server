@@ -112,6 +112,7 @@ class SyncCollectionHandler(Syncer):
     # ankidesktop >=2.1rc2 sends graves in applyGraves, but still expects
     # server-side deletions to be returned by start
     def start(self, minUsn, lnewer, graves={"cards": [], "notes": [], "decks": []}, offset=None):
+        # import pdb;pdb.set_trace()
         if offset is not None:
             pass
 
@@ -247,6 +248,11 @@ class SyncMediaHandler:
 
         # Get meta info first.
         meta = json.loads(zip_file.read("_meta").decode())
+        # logger.debug('mediasyncdelete meta:  %s', meta)
+        print('meta:')
+        for item in meta:
+            print(item)
+
 
         # Remove media files that were removed on the client.
         media_to_remove = []
@@ -254,6 +260,9 @@ class SyncMediaHandler:
             if ordinal == '':
                 media_to_remove.append(self._normalize_filename(normname))
 
+#        logger.debug('mediasyncdelete toremove:  %s', media_to_remove)
+        print('mediadetele:')
+        print(media_to_remove)
         # Add media files that were added on the client.
         media_to_add = []
         usn = self.col.media.lastUsn()
@@ -276,7 +285,13 @@ class SyncMediaHandler:
 
         # We count all files we are to remove, even if we don't have them in
         # our media directory and our db doesn't know about them.
+        #logger.debug('mediasyncdelete media_to_remove {} media_to_add {}'.format(len(media_to_remove), len(media_to_add)))
+        print('mediadetele and len :')
+        print(media_to_remove, media_to_add)
         processed_count = len(media_to_remove) + len(media_to_add)
+        print('mediameta len and mediadelete+add len :')
+        print(len(meta), processed_count)
+        #logger.debug('mediasyncdelete metalen:  %s', len(meta))
 
         assert len(meta) == processed_count  # sanity check
 
@@ -309,7 +324,9 @@ class SyncMediaHandler:
         Marks all files in list filenames as deleted and removes them from the
         media directory.
         """
-        logger.debug('Removing %d files from media dir.' % len(filenames))
+        #logger.debug('Removing % files from media dir.',len(filenames))
+        logger.debug('Removing files from media dir: ')
+        print(filenames)
         for filename in filenames:
             try:
                 self.col.media.syncDelete(filename)
@@ -585,6 +602,7 @@ class SyncApp:
             handler = session.get_handler_for_operation(method_name, col)
             handler_method = getattr(handler, method_name)
 
+            # print(keyword_args)
             res = handler_method(**keyword_args)
 
             col.save()
@@ -603,7 +621,7 @@ def make_app(global_conf, **local_conf):
     return SyncApp(**local_conf)
 
 def main():
-    logging.basicConfig(level=logging.INFO, format="[%(asctime)s]:%(levelname)s:%(name)s:%(message)s")
+    logging.basicConfig(level=logging.DEBUG, format="[%(asctime)s]:%(levelname)s:%(name)s:%(message)s")
     import ankisyncd
     logger.info("ankisyncd {} ({})".format(ankisyncd._get_version(), ankisyncd._homepage))
     from wsgiref.simple_server import make_server, WSGIRequestHandler

@@ -36,6 +36,7 @@ class ThreadingCollectionWrapper:
         self.path = path
         self.wrapper = get_collection_wrapper(config, path, setup_new_collection)
         self.logger = logging.getLogger("ankisyncd." + str(self))
+        self.logger.info("Havend got the collection wrapper")
 
         self._queue = Queue()
         self._thread = None
@@ -91,7 +92,14 @@ class ThreadingCollectionWrapper:
                 else:
                     func_name = func.__class__.__name__
 
-                self.logger.info("Running %s(*%s, **%s)", func_name, short_repr(args, self.logger), short_repr(kw, self.logger))
+               # self.logger.info("Running %s(*%s, **%s)", func_name, short_repr(args, self.logger), short_repr(kw, self.logger))
+               # uploadchange for mediasync, openration_upload for full sync 
+                if func_name == "uploadChanges" or func_name == 'operation_upload':
+                   self.logger.info("Running %s",func_name)
+                else:
+                   # self.logger.info("Running %s(*%s, **%s)", func_name, short_repr(args, self.logger), short_repr(kw, self.logger))
+                   self.logger.info("Running %s(*%s, **%s)", func_name, short_repr(args, self.logger), short_repr(kw, self.logger))
+                  # self.logger.info("Running %s",func_name)
                 self.last_timestamp = time.time()
 
                 try:
