@@ -30,7 +30,7 @@ def load(path=None):
     if path:
         choices = [path]
     for path in choices:
-        logger.debug("config.location: trying", path)
+        logger.debug("config.location: trying {}".format(path))
         try:
             parser.read(path)
             conf = parser['sync_app']
