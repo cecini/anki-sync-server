@@ -66,6 +66,7 @@ class CollectionWrapper:
         return col
 
     def _get_collection(self):
+
         col = anki.storage.Collection(self.path, server=True, log=True)
 
         # Ugly hack, replace default media manager with our custom one
