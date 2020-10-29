@@ -120,6 +120,10 @@ class SyncCollectionHandler(Syncer):
         self.minUsn = minUsn
         self.lnewer = not lnewer
         print("start calling removed to get lgraves in server, and change graves usn =new")
+        # when will have this graves usn = -1???????? 
+        # so maybe we cannot alway set this as server to use maxusn!!!
+        # apply graves and full sync,only graves tables????
+
         lgraves = self.removed()
         print("lgraves: \n")
         print(lgraves)
