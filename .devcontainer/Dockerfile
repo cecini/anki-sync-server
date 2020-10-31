@@ -1,5 +1,4 @@
 # [Choice] Python version: 3, 3.9, 3.8, 3.7, 3.6
-ARG VARIANT=3.9.0
 #FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
 
 FROM debian:stable-slim
@@ -24,13 +23,14 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 
 
-
+ARG VARIANT=3.9.0
 ARG PYTHON_PATH=/usr/local/python
 ENV PIPX_HOME=/usr/local/py-utils \
     PIPX_BIN_DIR=/usr/local/py-utils/bin
 ENV PATH=${PYTHON_PATH}/bin:${PATH}:${PIPX_BIN_DIR}
 COPY .devcontainer/library-scripts/python-debian.sh /tmp/library-scripts/
-RUN apt-get update && bash /tmp/library-scripts/python-debian.sh "$(VARIANT)" "${PYTHON_PATH}" "${PIPX_HOME}" \
+# why not #9 4.591 /bin/sh: 1: VARIANT: not found
+RUN apt-get update && bash /tmp/library-scripts/python-debian.sh "${VARIANT}" "${PYTHON_PATH}" "${PIPX_HOME}" \
 
 
 # Setup default python tools in a venv via pipx to avoid conflicts
@@ -55,9 +55,9 @@ RUN if [ "$INSTALL_NODE" = "true" ]; then bash /tmp/library-scripts/node-debian.
     && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
 
-## [Option] Install Node.js
-#ARG INSTALL_NODE="true"
-RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
+### [Option] Install Node.js
+##ARG INSTALL_NODE="true"
+#RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
 
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
