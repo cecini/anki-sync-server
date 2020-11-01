@@ -71,7 +71,7 @@ if [ "${PYTHON_VERSION}" != "none" ]; then
         cd /tmp/python-src
         curl -sSL -o /tmp/python-dl.tgz "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz"
         tar -xzf /tmp/python-dl.tgz -C "/tmp/python-src" --strip-components=1
-        ./configure CFLAGS='-DPy_DEBUG' --with-pydebug --prefix="${PYTHON_INSTALL_PATH}"  --with-ensurepip=install
+        ./configure CFLAGS='-O0 -DPy_DEBUG' --with-pydebug --prefix="${PYTHON_INSTALL_PATH}"  --with-ensurepip=install
         make -j 8
         make install
         rm -rf /tmp/python-dl.tgz /tmp/python-src
