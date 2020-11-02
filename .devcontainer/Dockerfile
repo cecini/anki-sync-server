@@ -92,6 +92,17 @@ RUN if [ "$INSTALL_NODE" = "true" ]; then bash /tmp/library-scripts/node-debian.
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends vim gdb
+## for anki 
+#RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+#RUN source $HOME/.cargo/env
+#wget https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip
+#sudo unzip protoc-3.13.0-linux-x86_64.zip -d /usr/local/ -x readme.txt
+#rustup update
+#cargo install ripgrep
+#RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#    && apt-get -y install --no-install-recommends portaudio19-dev mpv lame npm rsync gcc gettext git curl python3-dev python3-venv libxcb-xinerama0
+#    && apt-get -y install --no-install-recommends portaudio19-dev mpv lame rsync gcc gettext git curl libxcb-xinerama0
+
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
