@@ -6,6 +6,8 @@
 		"args": { 
 			// Update 'VARIANT' to pick a Python version: 3, 3.6, 3.7, 3.8, 3.9
 			"VARIANT": "3.9.0",
+			// "HTTPS_PROXY": "http://192.168.1.1:8123",
+			// "HTTP_PROXY": "http://192.168.1.1:8123",
 			// Options
 			"INSTALL_NODE": "true",
 			"NODE_VERSION": "lts/*"
@@ -15,7 +17,7 @@
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",
-		"python.pythonPath": "/usr/local/bin/python",
+		"python.pythonPath": "/usr/local/python/bin/python",
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": true,
 		"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",

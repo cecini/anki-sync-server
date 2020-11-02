@@ -269,7 +269,21 @@ install-oh-my()
 
     umask g-w,o-w
     mkdir -p ${OH_MY_INSTALL_DIR}
-    git clone --depth=1 \
+    git config --global http.proxy  http://192.168.1.1:8123/
+    git config --global https.proxy  http://192.168.1.1:8123/
+    git config --global http.sslVerify false 
+    #git config --global http.sslVersion tlsv1.1
+    git config --global core.compression 9
+    #git config --global core.packedGitLimit 512m 
+    git config --global core.packedGitWindowSize  512m 
+    git config --global pack.deltaCacheSize  2047m
+    git config --global pack.packSizeLimit 2047m
+    git config --global pack.windowMemory 2047m 
+    #git config --global http.proxy  http://192.168.1.227:8080/
+    #git config --global https.proxy  http://192.168.1.227:8080/
+    # GIT_SMART_HTTP
+    #GIT_CURL_VERBOSE=1 GIT_TRACE=1 GIT_SSL_VERSION=tlsv1.1 git -c http.sslVerify=false clone --depth=1 \
+    GIT_CURL_VERBOSE=1 GIT_TRACE=1  git -c http.sslVerify=false clone --depth=1 \
         -c core.eol=lf \
         -c core.autocrlf=false \
         -c fsck.zeroPaddedFilemode=ignore \
