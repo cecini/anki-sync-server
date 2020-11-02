@@ -1,3 +1,4 @@
+# use buildkit
 # [Choice] Python version: 3, 3.9, 3.8, 3.7, 3.6
 #FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
 
@@ -13,9 +14,32 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 COPY .devcontainer/library-scripts/common-debian.sh /tmp/library-scripts/
+#ENV HTTP_PROXY "http://192.168.1.1:8123"
+#ENV HTTPS_PROXY "http://192.168.1.1:8123"
+#ENV NO_PROXY "192.168.1.1,192.168.1.227,localhost,creativebaul.asuscomm.com"
+# RUN cat /etc/apt/sources.list
+# RUN git config --list
+
+# use mirror not proxy 
+#RUN echo 'Acquire::http::Proxy "http://192.168.1.1:8123/";' > /etc/apt/apt.conf.d/proxy.conf && \
+#    echo 'Acquire::https::Proxy "http://192.168.1.1:8123/";' >> /etc/apt/apt.conf.d/proxy.conf
+
+RUN echo "deb http://ftp2.cn.debian.org/debian stable main" > /etc/apt/sources.list && \
+    echo "deb http://security.debian.org/debian-security stable/updates main" >> /etc/apt/sources.list  && \
+    echo "deb http://ftp2.cn.debian.org/debian stable-updates main" >> /etc/apt/sources.list  
+# RUN apt-get update && apt-get install git 
+
+#RUN git config --global http.proxy  http://192.168.1.1:8123/ &&  \
+#    git config --global https.proxy  http://192.168.1.1:8123/ && \
+#    git config --global http.sslVerify false
+
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     # Remove imagemagick due to https://security-tracker.debian.org/tracker/CVE-2019-10131
-    && apt-get purge -y imagemagick imagemagick-6-common \
+    && apt-get purge -y imagemagick imagemagick-6-common \ 
+    && apt-get install -y git \
+   # && git config --global http.proxy  http://192.168.1.1:8123/ \
+    #&& git config --global https.proxy  http://192.168.1.1:8123/ \
+    #&& git config --global http.sslVerify false \
     # Install common packages, non-root user
     && bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
