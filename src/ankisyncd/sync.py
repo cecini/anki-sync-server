@@ -53,11 +53,24 @@ class Syncer(object):
 
     def changes(self):
         "Bundle up small objects."
+        # we should sync the active deck info???
         d = dict(models=self.getModels(),
                  decks=self.getDecks(),
                  tags=self.getTags())
         if self.lnewer:
+           # d['conf'] = {'curDeck': self.getConf().get('curDeck')}
             #d['conf'] = self.getConf()
+            d['conf'] = json.loads(self.col.backend.get_all_config())
+            #print("Type:", type(conf))
+            #conf=  self.col.backend.get_all_config()
+                    
+                    
+            print("server lnewer true,config--------")
+#            for cfgitem,value in self.getConf():
+#                print(cfgitem ,":", value)
+            print(d['conf'])
+            #print('curDeck:' + str(self.getConf().get('curDeck')))
+            #print("collapseTime:" + str(self.getConf().get('collapseTime')))
             d['crt'] = self.col.crt
         return d
 
@@ -66,8 +79,19 @@ class Syncer(object):
         self.mergeModels(rchg['models'])
         self.mergeDecks(rchg['decks'])
         self.mergeTags(rchg['tags'])
+        print("server changes------")
+        print(lchg)
+
+        print("client conf changes -----------")
+        print("TPYE rchg:", type(rchg))
         if 'conf' in rchg:
+            print(rchg['conf'])
+            print("TPYE rchg['conf']:", type(rchg['conf']))
             self.mergeConf(rchg['conf'])
+
+        print("mergedconf------------")    
+       # print(self.getConf().get('curDeck'))
+        print(self.col.get_config('curDeck'))
         # this was left out of earlier betas
         if 'crt' in rchg:
             self.col.crt = rchg['crt']
@@ -92,7 +116,7 @@ class Syncer(object):
                 return "model had usn = -1"
         if found:
             self.col.models.save()
-        # import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         self.col.sched.reset()
         # check for missing parent decks
         #self.col.sched.deckDueList()
@@ -340,9 +364,13 @@ from notes where %s""" % lim, self.maxUsn)
         return self.col.conf
 
     def mergeConf(self, conf):
-        newConf = ConfigManager(self.col)
-        for key, value in conf.items():
-            self.col.set_config(key, value)
+        self.col.backend.set_all_config(json.dumps(conf).encode())
+        #newConf = ConfigManager(self.col)
+        #for key, value in conf.items():
+         #   self.col.set_config(key, value)
+        
+
+            
 
 # Wrapper for requests that tracks upload/download progress
 ##########################################################################
@@ -537,6 +565,7 @@ class RemoteServer(HttpSyncer):
         return self._run("abort", kw)
 
     def _run(self, cmd, data):
+        import pdb; pdb.set_trace()
         return json.loads(
             self.req(cmd, io.BytesIO(json.dumps(data).encode("utf8"))).decode("utf8"))
 

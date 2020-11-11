@@ -141,6 +141,8 @@ class SyncCollectionHandler(Syncer):
         lchg = self.changes()
         # merge our side before returning
         self.mergeChanges(lchg, self.rchg)
+        print("server return only server changes to client --------")
+        print(lchg)
         return lchg
 
     def sanityCheck2(self, client, full=None):
