@@ -1,0 +1,71 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+# self package,but define  repo in the main workspaces defs.bzl
+load("@my_deps//:requirements.bzl", "requirement", "all_requirements")
+
+#The label must reference a file with extension '.bzl'
+#load("@net_ankiweb_anki//BUILD.bazel", "buildinfo")
+# @rules_python//python:python_version 
+# https://docs.bazel.build/versions/master/be/python.html#py_binary
+
+#"@net_ankiweb_anki//:buildinfo",
+
+# depend build order ???
+#genrule(
+#     name = "buildinfo",
+#     srcs= ["@net_ankiweb_anki//:buildinfo"],
+#     # label '@net_ankiweb_anki//:buildinfo.txt' is not in the current package
+#     outs= ["@net_ankiweb_anki//:buildinfo.txt"], # should filename 
+#)
+
+py_binary(
+    name = "syncd",
+    srcs = glob(["src/ankisyncd/*.py"]),
+    #srcs = glob(["**/*.py"], allow_empty = True),
+
+    #srcs = glob(["//src:**/*.py"]),
+    # srcs = glob(["//src:ankisyncd/**/*.py"]),
+    #main = "//src:ankisyncd/__main__.py",
+    main = "src/ankisyncd/__main__.py",
+    #     data = glob(["**/*"], exclude=["**/*.py", "**/* *", "BUILD", "WORKSPACE"]),
+
+    data = [
+        # runtime binary deps 		    
+	#"//src:ankisyncd.conf",
+	#"//src:ankisyncd.conf",
+	"src/ankisyncd.conf",
+
+    ],
+    #tags = ["manual"],
+    # python_version	
+    # srcs_version = PY3ONLY, PY2AND3
+    # srcs_version = "PY3"
+    # stamp = 1 ,buildinfo to binary 
+    # args = []
+
+    visibility = [
+        "//visibility:public",
+    ],
+    # requireaall requirest 
+    deps = [
+       # binary target 
+       # ":mypy_protobuf",
+       # "@rules_python//python/runfiles",
+       #"@my_deps/
+       #requirments(""),
+       #"@pylib//pylib/anki:wheel",
+       # use library ,not wheel 
+	# should put in front of the pylib_binary or dep 
+       "@net_ankiweb_anki//pylib/anki",
+       
+    ] + all_requirements,
+)
+
+
+    #srcs = [requirement("mypy-protobuf").replace(":pkg", ":mypy_protobuf.py")],
+    #args = [
+    #    "$(location .isort.cfg)",
+    #    "fix",
+   # ],
+   # data = [".isort.cfg"],
+#py_binary(
+#		)

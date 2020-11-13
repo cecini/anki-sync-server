@@ -1,0 +1,4 @@
+
+exports_files(["ankisyncd.conf"])
+
+exports_files(["ankisyncd/__main__.py"])
