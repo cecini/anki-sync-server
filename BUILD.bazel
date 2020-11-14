@@ -56,6 +56,12 @@ py_binary(
        # use library ,not wheel 
 	# should put in front of the pylib_binary or dep 
        "@net_ankiweb_anki//pylib/anki",
+       # try use wheel
+       # "@net_ankiweb_anki//pylib/anki:wheel",
+
+       # should raze here,no cannot ref ,because orjson not rust pkg, python pkg. 
+       #"@net_ankiweb_anki//cargo:orjson",
+       # this including the orjson. 
        
     ] + all_requirements,
 )

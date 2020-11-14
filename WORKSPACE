@@ -55,6 +55,8 @@ pip_install(   # or pip3_import
   # requirements = "//src:requirements.txt",
    python_interpreter_target = "@python//:python",
    timeout = 600,
+   #extra_pip_args = ["--no-binary","orjson"],	    
+
 )
 
 # : load dep's dep: pylib deps
