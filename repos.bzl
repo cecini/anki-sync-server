@@ -30,9 +30,9 @@ def register_repos():
 
     git_repository(
         name = "io_bazel_rules_rust",
-        commit = "a364ded42d9788144cd26b6e98d6b4038753bfa9",
+        commit = "504cde54248f518d5c98eb9f1e8db3546904ecb2",
         remote = "https://github.com/ankitects/rules_rust",
-        shallow_since = "1604550071 +1000",
+        shallow_since = "1606199575 +1000",
     )
     http_archive(
         name = "com_google_protobuf",
