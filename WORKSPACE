@@ -69,13 +69,26 @@ pylib_deps()
 # now data did not 
 # deps as pyre_deps repo 
 
-# should be in the pylib_deps.bzl as a whole 
-# ../anki/pylib_deps.bzl
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-protobuf_deps()
-load("@net_ankiweb_anki//cargo:crates.bzl", "raze_fetch_remote_crates")
-raze_fetch_remote_crates()
 
+load("@orjson_repo//:orjson_deps.bzl", "orjson_deps")
+orjson_deps()
+# from above orjson import 
+# the ankisync repo no need pyo3, so just belong the orjson repo.
+load("@rules_pyo3_repo//cargo:crates.bzl", "rules_pyo3_fetch_remote_crates")
+rules_pyo3_fetch_remote_crates()
+load("@orjson_repo//cargo:crates.bzl", orjson_fetch_remote_crates = "raze_fetch_remote_crates")
+orjson_fetch_remote_crates()
+
+
+
+
+# smallvec orjson vs anki feature diff 
+# https://docs.rs/smallvec/1.4.2/smallvec/
+# How isolate depend for different repo 
+# how command depend for defferent repo 
+# default ,if exist ,later will not import agian?
+load("@net_ankiweb_anki//cargo:crates.bzl", anki_fetch_remote_crates = "raze_fetch_remote_crates")
+anki_fetch_remote_crates()
 
 
 

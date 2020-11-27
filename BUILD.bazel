@@ -62,6 +62,7 @@ py_binary(
        # should raze here,no cannot ref ,because orjson not rust pkg, python pkg. 
        #"@net_ankiweb_anki//cargo:orjson",
        # this including the orjson. 
+       "@orjson_repo//:orjson",
        
     ] + all_requirements,
 )
