@@ -48,4 +48,20 @@ def register_repos():
         path = "/workspaces/anki",
 	# can under path 
     )
+    native.local_repository(
+	name = "orjson_repo",
+        path = "/workspaces/orjson",
+    )
+   # git_repository(
+   #     name = "orjson",
+  #name = "orjson_repo",
+#	#commit = "9ce98428a2a11211eab61b5c4290f07007f9dede",
+#	#commit = "3fc66b8592a999398c802186d51d2c23c540c08a",
+#	#commit = "c64e0ab3b2d65c74f3ddc6d124ebd9409c48379a",
+#	#commit = "ab680e3083e5c897ab91c01dc4400653cb086b24",
+#	#commit = "db9e4091123ccc1a559540e33066c2d3a6d49705",
+#	commit = "725f27efd50616be5bb0874d01827a0c2d1541cc",
+#	remote = "https://github.com/cecini/orjson.git",
+#        #shallow_since = "1604550071 +1000",
+#    )
 
