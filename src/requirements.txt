@@ -16,7 +16,8 @@ markdown==3.2.2; python_version >= "3.5"
 #orjson
 #orjson==3.4.3             # via -r requirements.in
 #/workspaces/orjson/orjson-3.4.3-cp39-cp39d-linux_x86_64.whl
-/workspaces/orjson/target/wheels/orjson-3.4.3-cp39-cp39d-linux_x86_64.whl
+
+#/workspaces/orjson/target/wheels/orjson-3.4.3-cp39-cp39d-linux_x86_64.whl
 #/workspaces/orjson/target/wheels/orjson-3.4.3-cp39-cp39d-manylinux2014_x86_64.whl
 # now use the pylib's 
 protobuf==3.13.0; python_version >= "3.7"
@@ -29,6 +30,7 @@ send2trash==1.5.0
 six==1.15.0; python_version >= "3.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0" and python_version >= "3.7"
 soupsieve==1.9.6; python_version >= "3.7"
 urllib3==1.25.10; python_version >= "3.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version < "4" and python_version >= "3.7"
-webob==1.8.6; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.3.0")
+webob
 #zipp==3.1.0; python_version < "3.8" and python_version >= "3.6" and (python_version >= "3.5" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.5.0" and python_version < "3.8" and python_version >= "3.5")
 zipp
+pympler

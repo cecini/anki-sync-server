@@ -4,6 +4,12 @@ import tracemalloc
 # PYTHONTRACEMALLOC=25
 tracemalloc.start(25)
 
+#import gc
+#gc.disable()
+#import orjson
+#import decimal
+
+
 
 if __package__ is None and not hasattr(sys, "frozen"):
     import os.path
@@ -12,7 +18,16 @@ if __package__ is None and not hasattr(sys, "frozen"):
 
 import ankisyncd.sync_app
 
+def default(obj):
+    if isinstance(obj, decimal.Decimal):
+        return str(obj)
+    raise TypeError
+
+
 if __name__ == "__main__":
+   # orjson.dumps([])
+   # orjson.dumps(decimal.Decimal("3.141592653"))
+   # orjson.dumps(decimal.Decimal("3.141592653"), default=default)
     ankisyncd.sync_app.main()
 
 
