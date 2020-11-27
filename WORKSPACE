@@ -59,7 +59,15 @@ pip_install(   # or pip3_import
 
 )
 
+
 # : load dep's dep: pylib deps
+
+# should be in the pylib_deps.bzl as a whole 
+# ../anki/pylib_deps.bzl
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+protobuf_deps()
+
+
 # !!!!
 # must use file label
 #: have rule repo dep and data/deps  
