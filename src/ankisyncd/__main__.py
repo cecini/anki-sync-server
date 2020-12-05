@@ -25,7 +25,7 @@ def default(obj):
 
 
 if __name__ == "__main__":
-   # orjson.dumps([])
+ #   orjson.dumps([])
    # orjson.dumps(decimal.Decimal("3.141592653"))
    # orjson.dumps(decimal.Decimal("3.141592653"), default=default)
     ankisyncd.sync_app.main()
