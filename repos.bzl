@@ -51,14 +51,15 @@ def register_repos():
         path = "/workspaces/anki",
 	# can under path 
     )
-    #native.local_repository(
-#	name = "orjson_repo",
- #       path = "/workspaces/orjson",
-  #  )
+    #maybe(
+    #    native.local_repository,
+   # 	name = "orjson_repo",
+    #    path = "/workspaces/orjson",
+    #)
     maybe(
         git_repository,
         name = "orjson_repo",
-	commit = "1aecbdd48a1b18c0292b20b3445e7f1f90f95af1",
+	commit = "2ed8462dc28fbb3929a11374af205d71b8d82faf",
         remote = "https://github.com/cecini/orjson",
     )
 

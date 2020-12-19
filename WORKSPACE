@@ -17,3 +17,9 @@ orjson_deps()
 
 load(":defs.bzl", "setup_deps")
 setup_deps()
+
+
+load(":late_deps.bzl", "setup_late_deps")
+setup_late_deps()
+
+

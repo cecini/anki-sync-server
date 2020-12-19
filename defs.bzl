@@ -43,7 +43,7 @@ def setup_deps():
 
     #toolchains_deps()
 
-    toolchains_setup_debugdeps_only_python()
+    toolchains_setup_debugdeps_onlypython()
     # need exclude the rust setup, this repo no need this 
     #setup_local_python(name = "python")
     #native.register_toolchains("@python//:python3_toolchain")
