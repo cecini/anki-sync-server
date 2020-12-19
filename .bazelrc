@@ -18,6 +18,12 @@ build:linux  --action_env="PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python" --acti
 #build:linux  --action_env="PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python" --action_env="PYO3_PYTHON=/usr/local/python39valgrindwithdebug/bin/python3.9" --action_env="PYTHONTRACEMALLOC=25" --action_env="PYTHONMALLOCSTATS=1"
 #
 #
+
+# worker config
+#build --@io_bazel_rules_rust//worker:use_worker=True
+#build:windows --worker_quit_after_buil
+
+
 # runfiles are off by default on Windows, and we need them
 build --enable_runfiles
 

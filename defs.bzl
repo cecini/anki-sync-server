@@ -1,7 +1,10 @@
 
 load("@bazel_skylib//lib:versions.bzl", "versions")
 #load("@pylib//:python.bzl", "setup_local_python")
-load("@net_ankiweb_anki//:python.bzl", "setup_local_python")
+#load("@net_ankiweb_anki//:python.bzl", "setup_local_python")
+load("@toolchains//:toolchains_deps.bzl", toolchains_deps = "toolchains_deps")
+load("@toolchains//:toolchains_defs.bzl", toolchains_setup_debugdeps_onlypython = "setup_debugdeps_onlypython", toolchains_setup_releasedeps = "setup_releasedeps")
+
 load("@rules_python//python:pip.bzl", "pip_install")
 
 #load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
@@ -37,8 +40,13 @@ def setup_deps():
 
     #load("@net_ankiweb_anki//:python.bzl", "setup_local_python")
     # we need setup my dep first ,so need this .
-    setup_local_python(name = "python")
-    native.register_toolchains("@python//:python3_toolchain")
+
+    #toolchains_deps()
+
+    toolchains_setup_debugdeps_only_python()
+    # need exclude the rust setup, this repo no need this 
+    #setup_local_python(name = "python")
+    #native.register_toolchains("@python//:python3_toolchain")
     #register_toolchains("@python//:python3_toolchain")
 
 

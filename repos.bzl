@@ -21,6 +21,13 @@ def register_repos():
             "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.2/bazel-skylib-1.0.2.tar.gz",
         ],
     )
+    maybe(
+        git_repository,
+        name = "toolchains",
+	commit = "036eb1bee43572d9d20f3b3d5dedb322bf1f2805",
+        remote = "https://github.com/cecini/toolchains.git",
+	#shallow_since = "1608361362 +0000"
+    )
 
     maybe(
         git_repository,
@@ -44,9 +51,15 @@ def register_repos():
         path = "/workspaces/anki",
 	# can under path 
     )
-    native.local_repository(
-	name = "orjson_repo",
-        path = "/workspaces/orjson",
+    #native.local_repository(
+#	name = "orjson_repo",
+ #       path = "/workspaces/orjson",
+  #  )
+    maybe(
+        git_repository,
+        name = "orjson_repo",
+	commit = "1aecbdd48a1b18c0292b20b3445e7f1f90f95af1",
+        remote = "https://github.com/cecini/orjson",
     )
 
    # git_repository(
